@@ -21,6 +21,8 @@ import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { Textarea } from "@/components/ui/textarea";
+import MarkdownPreview from "@/components/markdown/markdown-preview";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -71,7 +73,7 @@ export default function BlogForm() {
         className="space-y-6 w-full rounded-md border "
       >
         <div className="p-5 flex items-center  flex-wrap justify-between border-b">
-          <div className="flex gap-5  items-center ">
+          <div className="flex gap-5  items-center flex-wrap">
             <span
               role="button"
               tabIndex={0}
@@ -177,9 +179,9 @@ export default function BlogForm() {
                 </div>
               </FormControl>
 
-              <FormDescription>
+              {/* <FormDescription>
                 This is your the title of your blog.
-              </FormDescription>
+              </FormDescription> */}
 
               {form.getFieldState("title").invalid &&
                 form.getValues().title && <FormMessage />}
@@ -219,12 +221,12 @@ export default function BlogForm() {
                       <>click on preview to see image</>
                     ) : (
                       <>
-                        <div className="relative">
+                        <div className="relative h-80 mt-5 border rounded-md">
                           <Image
                             src={form.getValues("image_url")}
                             alt="blog image"
                             fill
-                            className="object-cover object-center"
+                            className="object-cover  object-center rounded-md"
                           />
                         </div>
                       </>
@@ -233,12 +235,57 @@ export default function BlogForm() {
                 </div>
               </FormControl>
 
-              <FormDescription>
+              {/* <FormDescription>
                 This is your the title of your blog.
-              </FormDescription>
+              </FormDescription> */}
 
               {form.getFieldState("image_url").invalid &&
                 form.getValues().image_url && (
+                  <div className="p-2">
+                    <FormMessage />
+                  </div>
+                )}
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="content"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <div
+                  className={cn(
+                    "w-full p-2 flex break-words gap-2",
+                    ispreview ? "divide-x-0" : "divide-x h-70vh"
+                  )}
+                >
+                  <Textarea
+                    placeholder="content"
+                    {...field}
+                    className={cn(
+                      "border-none text-lg font-medium leading-relaxed resize-none h-full",
+                      ispreview ? "w-0 p-0" : "w-full lg:w-1/2 "
+                    )}
+                  />
+
+                  <div
+                    className={cn(
+                      "lg:px-10 ",
+                      ispreview
+                        ? "mx-auto w-full lg:w-4/5 "
+                        : "w-1/2 lg:block hidden"
+                    )}
+                  >
+                    <MarkdownPreview content={form.getValues().content} />
+                  </div>
+                </div>
+              </FormControl>
+
+              {/* todo: add some desc */}
+
+              {form.getFieldState("content").invalid &&
+                form.getValues().content && (
                   <div className="p-2">
                     <FormMessage />
                   </div>
