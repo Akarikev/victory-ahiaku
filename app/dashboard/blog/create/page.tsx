@@ -24,20 +24,35 @@ import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import MarkdownPreview from "@/components/markdown/markdown-preview";
 
-const formSchema = z.object({
-  title: z.string().min(2, {
-    message: "title must be at least 2 characters.",
-  }),
-  image_url: z.string().url({
-    message: "invalid url",
-  }),
+const formSchema = z
+  .object({
+    title: z.string().min(2, {
+      message: "title must be at least 2 characters.",
+    }),
+    image_url: z.string().url({
+      message: "invalid url",
+    }),
 
-  content: z.string().min(2, {
-    message: "content must be at least 2 characters.",
-  }),
-  isPublished: z.boolean(),
-  isPremium: z.boolean(),
-});
+    content: z.string().min(2, {
+      message: "content must be at least 2 characters.",
+    }),
+    isPublished: z.boolean(),
+    isPremium: z.boolean(),
+  })
+  .refine(
+    (data) => {
+      const image_url = data.image_url;
+
+      try {
+        const url = new URL(image_url);
+
+        return url.hostname === "image.unsplash.com";
+      } catch (error) {
+        return false;
+      }
+    },
+    { message: "use correct image link", path: ["image_url"] }
+  );
 
 export default function BlogForm() {
   const [ispreview, setIsPreview] = useState(false);
@@ -78,7 +93,11 @@ export default function BlogForm() {
               role="button"
               tabIndex={0}
               className="inline-flex items-center gap-1 text-sm bg-zinc-700  p-1 rounded-md hover:ring-2 hover:ring-zinc-400 transition-all"
-              onClick={() => setIsPreview(!ispreview)}
+              onClick={() =>
+                setIsPreview(
+                  !ispreview && !form.getFieldState("image_url").invalid
+                )
+              }
             >
               {ispreview ? (
                 <>

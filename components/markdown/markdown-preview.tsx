@@ -50,7 +50,7 @@ function MarkdownPreview({
             const id = Math.floor(Math.random() * 100 + 1).toString();
             console.log(id);
             return (
-              <div className="bg-bg-gradient-dark text-gray-300 border rounded-md">
+              <div className="bg-gradient-dark text-gray-300 border rounded-md">
                 <div className="px-5 py-2 border-b flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <Icon />
