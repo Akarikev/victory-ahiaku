@@ -16,9 +16,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { Edit, EyeIcon, SaveIcon, Send, StarIcon } from "lucide-react";
+import { Edit, EyeIcon, Loader, SaveIcon, Send, StarIcon } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
@@ -30,6 +30,7 @@ export default function BlogForm({
 }: {
   onHandleSubmit: (data: BlogSchemaType) => void;
 }) {
+  const [isPending, startTransition] = useTransition();
   const [ispreview, setIsPreview] = useState(false);
   const { toast } = useToast();
   // 1. Define your form.
@@ -47,7 +48,10 @@ export default function BlogForm({
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof BlogformSchema>) {
-    onHandleSubmit(values);
+    startTransition(() => {
+      onHandleSubmit(values);
+    });
+
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     // console.log(values);
@@ -129,12 +133,16 @@ export default function BlogForm({
           </div>
 
           <Button
-            className=" inline-flex gap-1 items-center"
+            className={cn(" inline-flex gap-1 items-center")}
             size={"sm"}
             disabled={!form.formState.isValid}
           >
-            <SaveIcon className="w-4 h-4" />
-            save
+            {isPending ? (
+              <Loader className="w-4 h-4  animate-spin" />
+            ) : (
+              <SaveIcon className="w-4 h-4" />
+            )}
+            {isPending ? "saving ...." : "save"}
           </Button>
         </div>
 
