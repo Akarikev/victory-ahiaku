@@ -12,8 +12,8 @@ export const BlogformSchema = z
     content: z.string().min(2, {
       message: "content must be at least 2 characters.",
     }),
-    isPublished: z.boolean(),
-    isPremium: z.boolean(),
+    is_published: z.boolean(),
+    is_premium: z.boolean(),
   })
   .refine(
     (data) => {
