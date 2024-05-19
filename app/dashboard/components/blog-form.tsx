@@ -142,7 +142,7 @@ export default function BlogForm({
             ) : (
               <SaveIcon className="w-4 h-4" />
             )}
-            {isPending ? "saving ...." : "save"}
+            {isPending ? "saving..." : "save"}
           </Button>
         </div>
 

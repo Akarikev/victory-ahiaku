@@ -13,6 +13,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { BaggageClaim, LogOut } from "lucide-react";
 import { createClient } from "@/utils/supabase/client";
+import { ModeToggle } from "./mood-toggle";
 function Profile() {
   const user = useUser((state) => state.user);
   const Setuser = useUser((state) => state.setUser);
@@ -65,6 +66,8 @@ function Profile() {
               Logout
               <LogOut className="w-4 h-4" />
             </button>
+
+            <ModeToggle />
           </div>
         </PopoverContent>
       </Popover>

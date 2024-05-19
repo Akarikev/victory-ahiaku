@@ -19,3 +19,9 @@ export async function createBlog(data: BlogSchemaType) {
     return JSON.stringify(resA);
   }
 }
+
+export async function ReadBlogs() {
+  return server.from("blogs").select("*").order("created_at", {
+    ascending: true,
+  });
+}

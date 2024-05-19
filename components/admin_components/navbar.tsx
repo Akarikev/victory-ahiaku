@@ -9,6 +9,7 @@ import { useUser } from "@/lib/store/user";
 import Profile from "../profile";
 
 import { usePathname } from "next/navigation";
+import { ModeToggle } from "../mood-toggle";
 
 function Navbar() {
   const pathname = usePathname();

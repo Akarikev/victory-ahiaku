@@ -2,8 +2,12 @@ import { Button } from "@/components/ui/button";
 import { EyeIcon, PencilLine, TrashIcon } from "lucide-react";
 import React from "react";
 import { Switch } from "@/components/ui/switch";
+import { ReadBlogs } from "@/lib/actions/blog";
+import ALertDelete from "@/components/alert-delete";
 
-function BlogTable() {
+async function BlogTable() {
+  const { data: blogs } = await ReadBlogs();
+
   return (
     <div className="overflow-x-auto">
       <div className="border bg-gradient-dark rounded-md w-[900px] md:w-full ">
@@ -13,13 +17,17 @@ function BlogTable() {
           <div>Publish</div>
         </div>
 
-        <div className="grid grid-cols-5 p-5">
-          <h1 className="col-span-2 ">Blog Title</h1>
-          <Switch checked={false} />
-          <Switch checked={true} />
+        {blogs?.map((blog, i) => {
+          return (
+            <div className="grid grid-cols-5 p-5" key={i}>
+              <h1 className="col-span-2 ">{blog.title}</h1>
+              <Switch checked={blog.is_premium} />
+              <Switch checked={blog.is_published} />
 
-          <Action />
-        </div>
+              <Action blogId={blog.id} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -27,7 +35,7 @@ function BlogTable() {
 
 export default BlogTable;
 
-const Action = () => {
+const Action = ({ blogId }: { blogId: string }) => {
   const actions = [];
   return (
     <div className="flex items-center gap-5 flex-wrap xl:flex-row">
@@ -37,13 +45,9 @@ const Action = () => {
       >
         <EyeIcon className="w-4 h-4" /> view
       </Button>
-      <Button
-        variant={"link"}
-        className="inline-flex items-center justify-center gap-x-1 text-red-400"
-      >
-        <TrashIcon className="w-4 h-4 text-red-400" />
-        delete
-      </Button>
+      {/* add delete */}
+
+      <ALertDelete />
       <Button
         variant={"link"}
         className="inline-flex items-center justify-center gap-x-1"
