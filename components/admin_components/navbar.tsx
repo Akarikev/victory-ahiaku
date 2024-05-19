@@ -8,12 +8,12 @@ import Login from "../login";
 import { useUser } from "@/lib/store/user";
 import Profile from "../profile";
 
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import { ModeToggle } from "../mood-toggle";
 
 function Navbar() {
-  const pathname = usePathname();
-  console.log(pathname);
+  // const pathname = usePathname();
+  // console.log(pathname);
 
   const user = useUser((state) => state.user);
   return (

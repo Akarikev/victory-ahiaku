@@ -25,3 +25,7 @@ export async function ReadBlogs() {
     ascending: true,
   });
 }
+
+export async function DeleteBlogsById({ blogId }: { blogId: string }) {
+  return server.from("blogs").delete().eq("id", blogId);
+}
