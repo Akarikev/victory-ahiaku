@@ -2,10 +2,12 @@
 
 import { BlogSchemaType } from "@/app/dashboard/schema";
 import { createClient } from "@/utils/supabase/server";
+import { revalidatePath } from "next/cache";
 
-const server = createClient();
+const DASHBOARD = "/dashboard";
 
 export async function createBlog(data: BlogSchemaType) {
+  const server = createClient();
   const { ["content"]: excludeKey, ...blog } = data;
   const resB = await server.from("blogs").insert(blog).select("id").single();
 
@@ -21,11 +23,35 @@ export async function createBlog(data: BlogSchemaType) {
 }
 
 export async function ReadBlogs() {
+  const server = createClient();
   return server.from("blogs").select("*").order("created_at", {
     ascending: true,
   });
 }
 
-export async function DeleteBlogsById({ blogId }: { blogId: string }) {
-  return server.from("blogs").delete().eq("id", blogId);
+export async function DeleteBlogsById(blogId: string) {
+  const server = createClient();
+  const res = await server.from("blogs").delete().eq("id", blogId);
+
+  revalidatePath(DASHBOARD);
+
+  return JSON.stringify(res);
+}
+
+export async function UpdateBlogsById(blogId: string, data: BlogSchemaType) {
+  const server = createClient();
+  const res = await server.from("blogs").update(data).eq("id", blogId);
+
+  revalidatePath(DASHBOARD);
+
+  return JSON.stringify(res);
+}
+
+export async function ReadBlogsContent(blogId: string) {
+  const server = createClient();
+  return server
+    .from("blogs")
+    .select("*, blog_content(*)")
+    .eq("id", blogId)
+    .single();
 }

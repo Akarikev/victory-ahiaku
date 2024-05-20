@@ -24,11 +24,14 @@ import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 import MarkdownPreview from "@/components/markdown/markdown-preview";
 import { BlogformSchema, BlogSchemaType } from "../schema";
+import { BlogDetails } from "@/lib/types/data";
 
 export default function BlogForm({
   onHandleSubmit,
+  blog,
 }: {
   onHandleSubmit: (data: BlogSchemaType) => void;
+  blog?: BlogDetails;
 }) {
   const [isPending, startTransition] = useTransition();
   const [ispreview, setIsPreview] = useState(false);
@@ -38,11 +41,11 @@ export default function BlogForm({
     mode: "all",
     resolver: zodResolver(BlogformSchema),
     defaultValues: {
-      title: "",
-      content: "",
-      image_url: "",
-      is_premium: false,
-      is_published: true,
+      title: blog?.title || "",
+      content: blog?.blog_content?.content || "",
+      image_url: blog?.image_url || "",
+      is_premium: blog?.is_premium || false,
+      is_published: blog?.is_published || true,
     },
   });
 

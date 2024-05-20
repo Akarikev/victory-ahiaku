@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { SyntheticEvent, useTransition } from "react";
 import { Button } from "./ui/button";
 import { Loader2, TrashIcon } from "lucide-react";
 import { useToast } from "./ui/use-toast";
@@ -16,13 +16,31 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-function ALertDelete() {
+import { DeleteBlogsById } from "@/lib/actions/blog";
+import { cn } from "@/lib/utils";
+function ALertDelete({ blogId }: { blogId: string }) {
   const { toast } = useToast();
 
-  const onSubmitDelte = () => {
-    toast({
-      title: "Deleted! ",
-      description: "Deleted, successfully",
+  const [isPending, startTransition] = useTransition();
+  const onSubmitDelte = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    startTransition(async () => {
+      const deleteBlog = await DeleteBlogsById(blogId);
+
+      const { error } = JSON.parse(deleteBlog);
+
+      if (error?.message) {
+        toast({
+          variant: "destructive",
+          title: "something went wrong! ",
+          description: "failed to deleted",
+        });
+      } else {
+        toast({
+          title: "Deleted! ",
+          description: "Deleted, successfully",
+        });
+      }
     });
   };
 
@@ -49,7 +67,11 @@ function ALertDelete() {
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={onSubmitDelte} className="bg-red-400">
             <form className="inline-flex gap-2 items-center">
-              <Loader2 className="w-3 h-3 " />
+              <Loader2
+                className={cn("w-3 h-3 animate-spin ", {
+                  hidden: !isPending,
+                })}
+              />
               continue
             </form>
           </AlertDialogAction>
