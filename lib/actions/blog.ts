@@ -24,9 +24,24 @@ export async function createBlog(data: BlogSchemaType) {
 
 export async function ReadBlogs() {
   const server = createClient();
-  return server.from("blogs").select("*").order("created_at", {
-    ascending: true,
-  });
+  return server
+    .from("blogs")
+    .select("*")
+    .eq("is_published", true)
+    .order("created_at", {
+      ascending: true,
+    });
+}
+
+export async function ReadBlogsByAdmin() {
+  const server = createClient();
+  return server
+    .from("blogs")
+    .select("*")
+
+    .order("created_at", {
+      ascending: true,
+    });
 }
 
 export async function DeleteBlogsById(blogId: string) {
@@ -54,4 +69,26 @@ export async function ReadBlogsContent(blogId: string) {
     .select("*, blog_content(*)")
     .eq("id", blogId)
     .single();
+}
+
+export async function UpdateBlogsDetailsById(
+  blogId: string,
+  data: BlogSchemaType
+) {
+  const server = createClient();
+
+  const { ["content"]: excludeKey, ...blog } = data;
+
+  const resBlog = await server.from("blogs").update(blog).eq("id", blogId);
+
+  if (resBlog.error) {
+    return JSON.stringify(resBlog);
+  } else {
+    const res = await server
+      .from("blog_content")
+      .update({ content: data.content })
+      .eq("blog_id", blogId);
+    revalidatePath(DASHBOARD);
+    return JSON.stringify(res);
+  }
 }

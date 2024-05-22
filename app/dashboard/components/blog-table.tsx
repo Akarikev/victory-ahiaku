@@ -2,14 +2,18 @@ import { Button } from "@/components/ui/button";
 import { EyeIcon, PencilLine, TrashIcon } from "lucide-react";
 import React from "react";
 import { Switch } from "@/components/ui/switch";
-import { ReadBlogs, UpdateBlogsById } from "@/lib/actions/blog";
+import {
+  ReadBlogs,
+  ReadBlogsByAdmin,
+  UpdateBlogsById,
+} from "@/lib/actions/blog";
 import ALertDelete from "@/components/alert-delete";
 import SwitchForm from "@/components/switch-form";
 import { BlogSchemaType } from "../schema";
 import Link from "next/link";
 
 async function BlogTable() {
-  const { data: blogs } = await ReadBlogs();
+  const { data: blogs } = await ReadBlogsByAdmin();
 
   return (
     <div className="overflow-x-auto">
