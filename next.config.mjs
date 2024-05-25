@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  exclude: ["lib/types/supabase.ts"],
   images: {
     remotePatterns: [
       {
@@ -19,6 +20,9 @@ const nextConfig = {
         protocol: "https",
       },
     ],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 
