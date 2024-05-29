@@ -28,9 +28,9 @@ export async function updateSession(request: NextRequest) {
 
   if (data.user?.user_metadata.role === "admin") {
     // If the user is an admin, allow them to access the dashboard
-    return NextResponse.next();
+    // return NextResponse.next();
   } else {
     // If the user is not an admin or is not logged in, redirect to the homepage
-    return NextResponse.redirect(new URL("/", request.url));
+    // return NextResponse.redirect(new URL("/", request.url));
   }
 }
