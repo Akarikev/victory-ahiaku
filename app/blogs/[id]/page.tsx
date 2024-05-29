@@ -10,7 +10,7 @@ async function Page({
   };
 }) {
   const { data: blogs } = (await fetch(
-    "http://localhost:3000/api/blog?id=" + params.id
+    "https://admin.victoryahiaku.site/api/blog?id=" + params.id
   ).then((res) => res.json())) as { data: BlogD };
 
   if (!blogs?.id) {
