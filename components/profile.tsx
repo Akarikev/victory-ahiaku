@@ -45,17 +45,16 @@ function Profile() {
           <div className=" space-y-2 px-2 text-sm divide-y">
             <p className="font-semibold">{user?.user_metadata.full_name}</p>
             <p className="text-gray-400 py-2">{user?.email}</p>
-            {isAdmin === "admin" && (
-              <Link href={"/dashboard/"} className="block">
-                <Button
-                  variant={"link"}
-                  className="w-full inline-flex -ml-4 items-center justify-between "
-                >
-                  Dashboard
-                  <BaggageClaim className="w-4 h-4" />
-                </Button>
-              </Link>
-            )}
+
+            <Link href={"/dashboard/"} className="block">
+              <Button
+                variant={"link"}
+                className="w-full inline-flex -ml-4 items-center justify-between "
+              >
+                Dashboard
+                <BaggageClaim className="w-4 h-4" />
+              </Button>
+            </Link>
 
             <button
               onClick={handleLogout}
