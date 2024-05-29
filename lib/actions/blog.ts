@@ -48,6 +48,7 @@ export async function DeleteBlogsById(blogId: string) {
   const server = createClient();
   const res = await server.from("blogs").delete().eq("id", blogId);
 
+  revalidatePath("/blogs/" + blogId);
   revalidatePath(DASHBOARD);
 
   return JSON.stringify(res);
@@ -58,6 +59,8 @@ export async function UpdateBlogsById(blogId: string, data: BlogSchemaType) {
   const res = await server.from("blogs").update(data).eq("id", blogId);
 
   revalidatePath(DASHBOARD);
+  revalidatePath(`/blogs/${blogId}`);
+  console.log(`/blogs/${blogId}`);
 
   return JSON.stringify(res);
 }
@@ -89,6 +92,7 @@ export async function UpdateBlogsDetailsById(
       .update({ content: data.content })
       .eq("blog_id", blogId);
     revalidatePath(DASHBOARD);
+    revalidatePath(`/blogs/${blogId}`);
     return JSON.stringify(res);
   }
 }
