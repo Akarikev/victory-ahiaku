@@ -1,7 +1,7 @@
 export type BlogDetails = {
   created_at: string;
   id: string;
-  image_url: string;
+  image_url?: string;
   is_premium: boolean;
   is_published: boolean;
   title: string;

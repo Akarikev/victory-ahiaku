@@ -300,7 +300,7 @@ export default function BlogForm({
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        {/* <Button type="submit">Submit</Button> */}
       </form>
     </Form>
   );
