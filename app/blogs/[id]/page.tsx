@@ -18,7 +18,7 @@ async function Page({
   }
 
   return (
-    <div className="max-w-5xl mx-auto min-h-screen pt-10 space-y-10">
+    <div className="max-w-5xl mx-auto min-h-screen pt-10 space-y-10 md:px-40">
       <div>
         <h1>{blogs?.title}</h1>
 
