@@ -75,7 +75,7 @@ export default function BlogForm({
             <span
               role="button"
               tabIndex={0}
-              className="inline-flex items-center gap-1 text-sm bg-zinc-700  p-1 rounded-md hover:ring-2 hover:ring-zinc-400 transition-all"
+              className="inline-flex items-center gap-1 text-sm  p-1 rounded-md hover:ring-2 hover:ring-zinc-400 transition-all"
               onClick={() =>
                 setIsPreview(
                   !ispreview && !form.getFieldState("image_url").invalid
@@ -103,7 +103,7 @@ export default function BlogForm({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <div className="inline-flex items-center gap-1 text-sm bg-zinc-700  p-1 rounded-md hover:ring-2 hover:ring-zinc-400 transition-all">
+                    <div className="inline-flex items-center gap-1 text-sm p-1 rounded-md hover:ring-2 hover:ring-zinc-400 transition-all">
                       <StarIcon className="w-4 h-4" />
                       <span>Premium</span>
                       <Switch
@@ -121,7 +121,7 @@ export default function BlogForm({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <div className="inline-flex items-center gap-1 text-sm bg-zinc-700  p-1 rounded-md hover:ring-2 hover:ring-zinc-400 transition-all">
+                    <div className="inline-flex items-center gap-1 text-sm   p-1 rounded-md hover:ring-2 hover:ring-zinc-400 transition-all">
                       <Send className="w-4 h-4" />
                       <span>Publish</span>
                       <Switch

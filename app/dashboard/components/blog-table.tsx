@@ -17,7 +17,7 @@ async function BlogTable() {
 
   return (
     <div className="overflow-x-auto">
-      <div className="border bg-gradient-dark rounded-md w-[900px] md:w-full ">
+      <div className="border dark:bg-gradient-dark rounded-md w-[900px] md:w-full ">
         <div className="grid grid-cols-5 p-5 text-gray-500">
           <div className="col-span-2">Title</div>
           <div>Premium</div>

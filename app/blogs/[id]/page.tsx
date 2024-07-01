@@ -21,7 +21,6 @@ async function Page({
     <div className="max-w-5xl mx-auto min-h-screen pt-10 space-y-10 md:px-40">
       <div>
         <h1>{blogs?.title}</h1>
-
         <BlogContent blogId={blogs.id} />
       </div>
     </div>
